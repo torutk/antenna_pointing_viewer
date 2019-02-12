@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="454.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionController">
+   <children>
+      <Button layoutX="14.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleElevation" text="Elevation" />
+      <Button layoutX="16.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleAzimuth" text="Azimuth" />
+      <Button layoutX="14.0" layoutY="192.0" mnemonicParsing="false" onAction="#handlePolarization" text="Polarization" />
+      <Label fx:id="elevationLabel" layoutX="180.0" layoutY="83.0" text="Label" />
+      <Label fx:id="azimuthLabel" layoutX="180.0" layoutY="138.0" text="Label" />
+      <Label fx:id="polarizationLabel" layoutX="180.0" layoutY="196.0" text="Label" />
+      <Label alignment="CENTER" layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="434.0" text="Antenna STC-110 Direction View" textOverrun="CLIP" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="6.0" />
+      <CheckBox fx:id="absoluteCheckbox" disable="true" layoutX="344.0" layoutY="138.0" mnemonicParsing="false" text="Absolute" AnchorPane.rightAnchor="36.0" />
+   </children>
+</AnchorPane>
