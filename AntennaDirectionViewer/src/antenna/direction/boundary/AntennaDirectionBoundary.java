@@ -4,6 +4,7 @@
 package antenna.direction.boundary;
 
 import antenna.direction.AntennaDirectionViewModel;
+import antenna.direction.AntennaDirectionViewModel.AngleMode;
 import javafx.application.Platform;
 
 import java.nio.ByteBuffer;
@@ -54,19 +55,19 @@ public enum AntennaDirectionBoundary {
             log.fine("3 Axes Basic Feedback:Azimuth");
             var response = new AzimuthBasicFeedbackResponse(sendAndReceive(Message.READ_AZIMUTH_COMMAND_MESSAGE));
             double angle;
-            boolean isAbsolute;
+            AngleMode angleMode;
             if (response.isNak()) {
                 log.warning("3 Axes Basic Feedback:Azimuth respond NAK:" + response.getNakStatus());
                 angle = Double.NaN;
-                isAbsolute = false;
+                angleMode = AntennaDirectionViewModel.AngleMode.RELATIVE;
             } else {
                 log.fine("3 Axes Basic Feedback:Azimuth respond ACK:");
                 angle = response.getAzimuth();
-                isAbsolute = response.isAbsolute();
+                angleMode = response.getAngleMode();
             }
             Platform.runLater(() -> {
                 model.setAzimuth(angle);
-                model.setAbsolute(isAbsolute);
+                model.setAngleMode(angleMode);
             });
         });
     }

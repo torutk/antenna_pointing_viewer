@@ -24,6 +24,7 @@ public class AntennaDirectionApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("AntennaDirectionView.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("STC-110 Remote Viewer");
         primaryStage.show();
     }
 

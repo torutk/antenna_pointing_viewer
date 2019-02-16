@@ -1,5 +1,8 @@
 package antenna.direction.boundary;
 
+import antenna.direction.AntennaDirectionViewModel;
+import antenna.direction.AntennaDirectionViewModel.AngleMode;
+
 import java.util.Arrays;
 
 public class AzimuthBasicFeedbackResponse {
@@ -11,12 +14,12 @@ public class AzimuthBasicFeedbackResponse {
         this.message = message;
     }
 
-    boolean isAbsolute() {
+    AngleMode getAngleMode() {
         assert message.isAck();
         byte[] data = message.getData();
         byte relativeOrAbsolute = data[4];
         assert relativeOrAbsolute == 'a' || relativeOrAbsolute == 'r';
-        return relativeOrAbsolute == 'a' ? true : false;
+        return relativeOrAbsolute == 'a' ? AngleMode.ABSOLUTE : AngleMode.RELATIVE;
     }
 
     double getAzimuth() {

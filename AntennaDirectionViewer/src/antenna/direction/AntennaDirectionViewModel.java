@@ -3,10 +3,9 @@
  */
 package antenna.direction;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.*;
+
+import java.time.LocalTime;
 
 /**
  *
@@ -14,10 +13,16 @@ import javafx.beans.property.SimpleDoubleProperty;
  */
 public enum AntennaDirectionViewModel {
     INSTANCE;
+
+    public enum AngleMode {
+        ABSOLUTE, RELATIVE;
+    }
+
     DoubleProperty elevationProperty = new SimpleDoubleProperty(Double.NaN); 
     DoubleProperty azimuthProperty = new SimpleDoubleProperty(Double.NaN);
     DoubleProperty polarizationProperty = new SimpleDoubleProperty(Double.NaN);
-    BooleanProperty absolutePropeerty = new SimpleBooleanProperty(Boolean.FALSE);
+    ObjectProperty<AngleMode> angleModeProperty = new SimpleObjectProperty<>();
+    ObjectProperty<LocalTime> updateTimeProperty = new SimpleObjectProperty<>();
 
     public void setElevation(double angle) {
         elevationProperty.set(angle);
@@ -31,7 +36,11 @@ public enum AntennaDirectionViewModel {
         polarizationProperty.set(angle);
     }
 
-    public void setAbsolute(boolean isAbsolute) {
-        absolutePropeerty.set(isAbsolute);
+    public void setAngleMode(AngleMode angleMode) {
+        angleModeProperty.set(angleMode);
+    }
+
+    public void setUpdateTime(LocalTime time) {
+        updateTimeProperty.set(time);
     }
 }

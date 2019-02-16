@@ -4,6 +4,7 @@
 package antenna.direction;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -21,47 +23,36 @@ import javafx.util.converter.NumberStringConverter;
  */
 public class AntennaDirectionController implements Initializable {
     private static final Logger logger = Logger.getLogger(AntennaDirectionController.class.getName());
-    @FXML Label elevationLabel;
-    @FXML Label azimuthLabel;
-    @FXML CheckBox absoluteCheckbox;
-    @FXML Label polarizationLabel;
+    @FXML Text azimuthText;
+    @FXML Text elevationText;
+    @FXML Text polarizationText;
+    @FXML Text absoluteText;
+    @FXML Text updateTimeText;
 
     AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
 
     @FXML
-    void handleElevation(ActionEvent event) {
-        logger.fine("Now read elevation from STC-110.");
-        boundary.getElevation();
-        logger.fine("elevation is read.");
-    }
-
-    @FXML
-    void handleAzimuth(ActionEvent event) {
-        logger.fine("Now read azimuth from STC-110.");
+    void handleManualUpdate(ActionEvent event) {
+        logger.fine("Manual Update Operation Triggered.");
         boundary.getAzimuth();
-        logger.fine("read azimuth from STC-110.");
-    }
-
-    @FXML
-    void handlePolarization(ActionEvent event) {
-        logger.fine("Now read polarization from STC-110.");
+        boundary.getElevation();
         boundary.getPolarizatoin();
-        logger.fine("read polarization from STC-110.");
+        model.setUpdateTime(LocalTime.now());
+        logger.fine("3 Axes are read.");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        elevationLabel.textProperty().bindBidirectional(
+        elevationText.textProperty().bindBidirectional(
                 model.elevationProperty, new NumberStringConverter()
         );
-        azimuthLabel.textProperty().bindBidirectional(
+        azimuthText.textProperty().bindBidirectional(
                 model.azimuthProperty, new NumberStringConverter()
         );
-        polarizationLabel.textProperty().bindBidirectional(
-                model.polarizationProperty, new NumberStringConverter()
-        );
-        absoluteCheckbox.selectedProperty().bind(model.absolutePropeerty);
+        polarizationText.textProperty().bind(model.polarizationProperty.asString());
+        absoluteText.textProperty().bind(model.angleModeProperty.asString());
+        updateTimeText.textProperty().bind(model.updateTimeProperty.asString());
     }
     
     
