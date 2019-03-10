@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +26,9 @@ public class AntennaDirectionApp extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("STC-110 Remote Viewer");
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit();
+        });
         primaryStage.show();
     }
 

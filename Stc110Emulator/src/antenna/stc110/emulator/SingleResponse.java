@@ -65,6 +65,8 @@ public class SingleResponse {
 
     public static void main(String[] args) {
         SingleResponse emu = new SingleResponse("COM4");
-        emu.oneshot();
+        while (true) {
+            emu.oneshot();
+        }
     }
 }

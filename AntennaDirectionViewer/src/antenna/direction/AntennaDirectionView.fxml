@@ -2,21 +2,27 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="454.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="454.0" stylesheets="@AntennaDirectionView.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionController">
    <children>
       <TabPane prefHeight="294.0" prefWidth="454.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="monitor">
                <content>
-                  <GridPane hgap="8.0" vgap="8.0">
+                  <GridPane hgap="8.0" styleClass="grid" vgap="8.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -30,18 +36,18 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Axes Type" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Azimuth" GridPane.rowIndex="1" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Elevation" GridPane.rowIndex="2" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Polarization" GridPane.rowIndex="3" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Angle" GridPane.columnIndex="1" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Note" GridPane.columnIndex="2" />
-                        <Text fx:id="azimuthText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Text fx:id="elevationText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Text fx:id="polarizationText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Text fx:id="absoluteText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last updated:" GridPane.rowIndex="4" />
-                        <Text fx:id="updateTimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Axes Type" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Azimuth" GridPane.rowIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Elevation" GridPane.rowIndex="2" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Polarization" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Angle" GridPane.columnIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Note" GridPane.columnIndex="2" />
+                        <Text fx:id="azimuthText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="numeric-text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Text fx:id="elevationText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="numeric-text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Text fx:id="polarizationText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="numeric-text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Text fx:id="absoluteText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="string-text" text="Text" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="Last updated:" GridPane.rowIndex="4" />
+                        <Text fx:id="updateTimeText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="numeric-text" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Button mnemonicParsing="false" onAction="#handleManualUpdate" text="Manual Update" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                      </children>
                      <padding>
@@ -50,7 +56,38 @@
                   </GridPane>
                </content>
             </Tab>
-          <Tab text="configuration" />
+          <Tab text="configuration">
+               <content>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="265.0" prefWidth="209.0">
+                           <children>
+                              <Pane prefHeight="81.0" prefWidth="209.0">
+                                 <children>
+                                    <CheckBox fx:id="periodicUpdateCheckbox" layoutX="7.0" layoutY="21.0" mnemonicParsing="false" text="Periodic Update" />
+                                    <TextField fx:id="periodicTextField" layoutX="128.0" layoutY="17.0" prefHeight="25.0" prefWidth="53.0" />
+                                    <Label layoutX="187.0" layoutY="21.0" text="s" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </VBox>
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleApply" text="Apply" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="16.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content></Tab>
         </tabs>
       </TabPane>
    </children>

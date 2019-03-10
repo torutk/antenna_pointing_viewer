@@ -8,8 +8,8 @@ import antenna.direction.AntennaDirectionViewModel.AngleMode;
 import javafx.application.Platform;
 
 import java.nio.ByteBuffer;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.time.LocalTime;
+import java.util.concurrent.*;
 import java.util.logging.Logger;
 
 /**
@@ -22,17 +22,26 @@ public enum AntennaDirectionBoundary {
     public static final Logger log = Logger.getLogger(AntennaDirectionBoundary.class.getName());
 
     private SerialIo serial = new SerialIo("COM3");
-    Executor executor = Executors.newSingleThreadExecutor();
+    private Executor requestExecutor = Executors.newSingleThreadExecutor();
+    private ScheduledExecutorService periodicExecutor = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledFuture<?> future;
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
+    private Runnable task;
 
     private AntennaDirectionBoundary() {
+        task = () -> {
+            getAzimuth();
+            getElevation();
+            getPolarizatoin();
+            model.setUpdateTime(LocalTime.now());
+        };
     }
 
     /**
      * Execute on serial IO thread, command read elevation to STC-110, then receive response from STC-110.
      */
     public void getElevation() {
-        executor.execute(() -> {
+        requestExecutor.execute(() -> {
             log.fine("3 Axes Basic Feedback:Elevation");
             var response = new ElevationBasicFeedbackResponse(sendAndReceive(Message.READ_ELEVATION_COMMAND_MESSAGE));
             double angle;
@@ -51,7 +60,7 @@ public enum AntennaDirectionBoundary {
      * Execute on serial IO thread, command read azimuth to STC-110, then receive response from STC-110.
      */
     public void getAzimuth() {
-        executor.execute(() -> {
+        requestExecutor.execute(() -> {
             log.fine("3 Axes Basic Feedback:Azimuth");
             var response = new AzimuthBasicFeedbackResponse(sendAndReceive(Message.READ_AZIMUTH_COMMAND_MESSAGE));
             double angle;
@@ -76,7 +85,7 @@ public enum AntennaDirectionBoundary {
      * Execute on serial IO thread, command read polarization to STC-110, then receive response from STC-110.
      */
     public void getPolarizatoin() {
-        executor.execute(() -> {
+        requestExecutor.execute(() -> {
             log.fine("3 Axes Basic Feedback:Polarization");
             var response = new PolarizationBasicFeedbackResponse(sendAndReceive(Message.READ_POLARIZATION_COMMAND_MESSAGE));
             double angle;
@@ -111,4 +120,17 @@ public enum AntennaDirectionBoundary {
         return sb.toString();
     }
 
+    public void startPeriodic(int interval) {
+        future = periodicExecutor.scheduleWithFixedDelay(task, 0, interval, TimeUnit.SECONDS);
+    }
+
+    public void stopPeriodic() {
+        if (future != null) {
+            future.cancel(true);
+        }
+    }
+
+    public void shutdown() {
+        periodicExecutor.shutdownNow();
+    }
 }

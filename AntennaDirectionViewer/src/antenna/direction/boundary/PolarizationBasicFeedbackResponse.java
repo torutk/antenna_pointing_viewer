@@ -18,7 +18,7 @@ public class PolarizationBasicFeedbackResponse {
         String polarizationString = new String(polarization);
         return Double.parseDouble(polarizationString);
     }
-
+ 
     boolean isNak() {
         return message.isNak();
     }

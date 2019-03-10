@@ -5,16 +5,19 @@ package antenna.direction;
 
 import java.net.URL;
 import java.time.LocalTime;
+import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import antenna.direction.boundary.AntennaDirectionBoundary;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -29,30 +32,51 @@ public class AntennaDirectionController implements Initializable {
     @FXML Text absoluteText;
     @FXML Text updateTimeText;
 
+    @FXML CheckBox periodicUpdateCheckbox;
+    @FXML TextField periodicTextField;
+
     AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
 
     @FXML
     void handleManualUpdate(ActionEvent event) {
-        logger.fine("Manual Update Operation Triggered.");
+        logger.info("Manual Update Operation Triggered.");
+        update();
+    }
+
+    @FXML
+    void handleApply(ActionEvent event) {
+        logger.config("Configuraion Apply Triggered.");
+        config();
+    }
+
+    void update() {
         boundary.getAzimuth();
         boundary.getElevation();
         boundary.getPolarizatoin();
         model.setUpdateTime(LocalTime.now());
-        logger.fine("3 Axes are read.");
+    }
+
+    void config() {
+        logger.info("model#periodicProperty is " + model.periodicProperty().get());
+        if (periodicUpdateCheckbox.isSelected()) {
+            boundary.startPeriodic(model.periodicProperty().get());
+        } else {
+            boundary.stopPeriodic();
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        elevationText.textProperty().bindBidirectional(
-                model.elevationProperty, new NumberStringConverter()
+        elevationText.textProperty().bind(model.elevationProperty().asString());
+        azimuthText.textProperty().bind(model.azimuthProperty().asString());
+        polarizationText.textProperty().bind(model.polarizationProperty().asString());
+        absoluteText.textProperty().bind(model.angleModeProperty().asString());
+        updateTimeText.textProperty().bindBidirectional(
+                model.updateTimeProperty(), new LocalTimeStringConverter(FormatStyle.MEDIUM)
         );
-        azimuthText.textProperty().bindBidirectional(
-                model.azimuthProperty, new NumberStringConverter()
-        );
-        polarizationText.textProperty().bind(model.polarizationProperty.asString());
-        absoluteText.textProperty().bind(model.angleModeProperty.asString());
-        updateTimeText.textProperty().bind(model.updateTimeProperty.asString());
+        periodicTextField.disableProperty().bind(Bindings.not(periodicUpdateCheckbox.selectedProperty()));
+        periodicTextField.textProperty().bindBidirectional(model.periodicProperty(), new NumberStringConverter());
     }
     
     

@@ -1,0 +1,34 @@
+.tab-pane {
+-fx-base: #101020;
+-fx-background-color: #080810;
+}
+
+.grid {
+-fx-background-color: #080810;
+}
+
+.grid .header-text {
+-fx-font-size: 14;
+-fx-fill: #a0a0c0;
+-fx-text-alignment: center;
+}
+
+.grid .numeric-text {
+-fx-font-family: monospaced;
+-fx-font-size: 13;
+-fx-fill: #80c080;
+}
+
+.grid .string-text {
+-fx-font-family: dialog;
+-fx-font-size: 13;
+-fx-fill: #80a0c0;
+}
+
+.grid .button {
+-fx-base: #181828;
+}
+
+.check-box {
+-fx-base: #404040;
+}

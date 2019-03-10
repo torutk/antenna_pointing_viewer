@@ -1,6 +1,5 @@
 package antenna.direction.boundary;
 
-import antenna.direction.AntennaDirectionViewModel;
 import antenna.direction.AntennaDirectionViewModel.AngleMode;
 
 import java.util.Arrays;
