@@ -20,15 +20,21 @@ public enum AntennaDirectionBoundary {
     INSTANCE;
 
     public static final Logger log = Logger.getLogger(AntennaDirectionBoundary.class.getName());
+    private ThreadFactory daemonThreadFactory = r -> {
+        Thread t = new Thread(r);
+        t.setDaemon(true);
+        return t;
+    };
 
     private SerialIo serial = new SerialIo("COM3");
-    private Executor requestExecutor = Executors.newSingleThreadExecutor();
-    private ScheduledExecutorService periodicExecutor = Executors.newSingleThreadScheduledExecutor();
+    private Executor requestExecutor = Executors.newSingleThreadExecutor(daemonThreadFactory);
+
+    private ScheduledExecutorService periodicExecutor = Executors.newSingleThreadScheduledExecutor(daemonThreadFactory);
     private ScheduledFuture<?> future;
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     private Runnable task;
 
-    private AntennaDirectionBoundary() {
+    AntennaDirectionBoundary() {
         task = () -> {
             getAzimuth();
             getElevation();
@@ -96,9 +102,7 @@ public enum AntennaDirectionBoundary {
                 log.fine("3 Axes Basic Feedback:Polarization respond ACK:");
                 angle = response.getPolarization();
             }
-            Platform.runLater(() -> {
-                model.setPolarization(angle);
-            });
+            Platform.runLater(() -> model.setPolarization(angle));
         });
     }
 
@@ -110,7 +114,7 @@ public enum AntennaDirectionBoundary {
 
     static String toStringBuffer(ByteBuffer buffer) {
         buffer.flip();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (buffer.hasRemaining()) {
             sb.append(String.format("%02x ", buffer.get()));
         }
