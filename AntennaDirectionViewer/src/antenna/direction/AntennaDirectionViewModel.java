@@ -24,6 +24,7 @@ public enum AntennaDirectionViewModel {
     private ObjectProperty<AngleMode> angleModeProperty = new SimpleObjectProperty<>();
     private ObjectProperty<LocalTime> updateTimeProperty = new SimpleObjectProperty<>();
     private IntegerProperty periodicProperty = new SimpleIntegerProperty(0);
+    private BooleanProperty floatingProperty = new SimpleBooleanProperty(false);
 
     public DoubleProperty elevationProperty() {
         return elevationProperty;
@@ -49,6 +50,10 @@ public enum AntennaDirectionViewModel {
         return periodicProperty;
     }
 
+    public BooleanProperty floatingProperty() {
+        return floatingProperty;
+    }
+
     public void setElevation(double angle) {
         elevationProperty.set(angle);
     }
@@ -67,5 +72,9 @@ public enum AntennaDirectionViewModel {
 
     public void setUpdateTime(LocalTime time) {
         updateTimeProperty.set(time);
+    }
+
+    public void setFloating(boolean isFloating) {
+        floatingProperty.setValue(isFloating);
     }
 }

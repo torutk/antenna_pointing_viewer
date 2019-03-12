@@ -32,3 +32,10 @@
 .check-box {
 -fx-base: #404040;
 }
+
+#floating .label {
+-fx-font-family: monospaced;
+-fx-font-size: 16;
+-fx-font-weight: bold;
+-fx-text-fill: #40c0a0;
+}

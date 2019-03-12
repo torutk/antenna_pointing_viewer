@@ -3,6 +3,7 @@
  */
 package antenna.direction;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.FormatStyle;
@@ -13,10 +14,18 @@ import antenna.direction.boundary.AntennaDirectionBoundary;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
@@ -35,8 +44,10 @@ public class AntennaDirectionController implements Initializable {
     @FXML CheckBox periodicUpdateCheckbox;
     @FXML TextField periodicTextField;
 
-    AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
-    AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
+    private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
+    private AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
+    private Stage stage;
+    private Stage floatingStage;
 
     @FXML
     void handleManualUpdate(ActionEvent event) {
@@ -48,6 +59,13 @@ public class AntennaDirectionController implements Initializable {
     void handleApply(ActionEvent event) {
         logger.config("Configuraion Apply Triggered.");
         config();
+    }
+
+    @FXML
+    void handleFloatingView(ActionEvent event) throws IOException {
+        logger.info("Floating view Triggered.");
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        floating();
     }
 
     void update() {
@@ -66,6 +84,21 @@ public class AntennaDirectionController implements Initializable {
         }
     }
 
+    void floating() throws IOException {
+        stage.hide();
+        floatingStage = new Stage();
+        floatingStage.initOwner(stage);
+        Parent root = FXMLLoader.load(getClass().getResource("AntennaDirectionFloatingView.fxml"));
+        root.setStyle("-fx-background-color: transparent");
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        floatingStage.setScene(scene);
+        floatingStage.initStyle(StageStyle.TRANSPARENT);
+        floatingStage.setAlwaysOnTop(true);
+        floatingStage.show();
+        model.setFloating(true);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         elevationText.textProperty().bind(model.elevationProperty().asString());
@@ -77,6 +110,13 @@ public class AntennaDirectionController implements Initializable {
         );
         periodicTextField.disableProperty().bind(Bindings.not(periodicUpdateCheckbox.selectedProperty()));
         periodicTextField.textProperty().bindBidirectional(model.periodicProperty(), new NumberStringConverter());
+        model.floatingProperty().addListener((arg, oldValue, newValue) -> {
+            logger.info("floatingProperty changed from " + oldValue + " to " + newValue);
+            if (newValue == false ) {
+                floatingStage.close();
+                stage.show();
+            }
+        });
     }
     
     

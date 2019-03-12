@@ -71,8 +71,9 @@
                               </Pane>
                            </children>
                         </VBox>
-                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="16.0">
                            <children>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleFloatingView" text="Floating View" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleApply" text="Apply" />
                            </children>
                            <opaqueInsets>
