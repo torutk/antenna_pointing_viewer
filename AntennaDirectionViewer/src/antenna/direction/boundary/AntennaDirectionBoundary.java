@@ -38,7 +38,7 @@ public enum AntennaDirectionBoundary {
         task = () -> {
             getAzimuth();
             getElevation();
-            getPolarizatoin();
+            getPolarization();
             model.setUpdateTime(LocalTime.now());
         };
     }
@@ -90,7 +90,7 @@ public enum AntennaDirectionBoundary {
     /**
      * Execute on serial IO thread, command read polarization to STC-110, then receive response from STC-110.
      */
-    public void getPolarizatoin() {
+    public void getPolarization() {
         requestExecutor.execute(() -> {
             log.fine("3 Axes Basic Feedback:Polarization");
             var response = new PolarizationBasicFeedbackResponse(sendAndReceive(Message.READ_POLARIZATION_COMMAND_MESSAGE));

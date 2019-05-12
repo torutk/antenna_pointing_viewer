@@ -15,7 +15,7 @@ public enum AntennaDirectionViewModel {
     INSTANCE;
 
     public enum AngleMode {
-        ABSOLUTE, RELATIVE;
+        ABSOLUTE, RELATIVE
     }
 
     private DoubleProperty elevationProperty = new SimpleDoubleProperty(Double.NaN);

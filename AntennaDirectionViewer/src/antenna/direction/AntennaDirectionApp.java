@@ -15,6 +15,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
+ * JavaFX Application entry point.
+ *
+ * This application uses FXML and CSS files for JavaFX GUI, and logging properties file.
  *
  * @author TAKAHASHI,Toru
  */
@@ -26,12 +29,17 @@ public class AntennaDirectionApp extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("STC-110 Remote Viewer");
-        primaryStage.setOnCloseRequest(event -> {
-            Platform.exit();
-        });
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
         primaryStage.show();
     }
 
+    /**
+     * Initialize log configuration.
+     *
+     * Configuration can be applied from file or class specified by system property.
+     * If system property is not specified, then read file named 'logging.properties'
+     * from the directory of this application class.
+     */
     static void setupLogging() {
         if (System.getProperty("java.util.logging.config.file") == null
                 && System.getProperty("java.util.logging.config.class") == null) {
@@ -45,6 +53,11 @@ public class AntennaDirectionApp extends Application {
         }
     }
 
+    /**
+     * Entry point of this application program.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         setupLogging();
         launch(args);

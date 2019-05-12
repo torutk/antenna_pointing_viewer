@@ -3,13 +3,6 @@
  */
 package antenna.direction;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalTime;
-import java.time.format.FormatStyle;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
-
 import antenna.direction.boundary.AntennaDirectionBoundary;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -25,9 +18,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.FormatStyle;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,7 +56,7 @@ public class AntennaDirectionController implements Initializable {
 
     @FXML
     void handleApply(ActionEvent event) {
-        logger.config("Configuraion Apply Triggered.");
+        logger.config("Configuration Apply Triggered.");
         config();
     }
 
@@ -71,7 +70,7 @@ public class AntennaDirectionController implements Initializable {
     void update() {
         boundary.getAzimuth();
         boundary.getElevation();
-        boundary.getPolarizatoin();
+        boundary.getPolarization();
         model.setUpdateTime(LocalTime.now());
     }
 
@@ -84,6 +83,11 @@ public class AntennaDirectionController implements Initializable {
         }
     }
 
+    /**
+     * change the view as transparent floating(always top) window.
+     *
+     * @throws IOException
+     */
     void floating() throws IOException {
         stage.hide();
         floatingStage = new Stage();
@@ -112,7 +116,7 @@ public class AntennaDirectionController implements Initializable {
         periodicTextField.textProperty().bindBidirectional(model.periodicProperty(), new NumberStringConverter());
         model.floatingProperty().addListener((arg, oldValue, newValue) -> {
             logger.info("floatingProperty changed from " + oldValue + " to " + newValue);
-            if (newValue == false ) {
+            if (!newValue) {
                 floatingStage.close();
                 stage.show();
             }

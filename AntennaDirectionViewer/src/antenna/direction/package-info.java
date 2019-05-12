@@ -1,5 +1,9 @@
 /**
+ * Contains GUI classes.
+ *
  * GigaSat Flyaway Antenna Control with STC-110 remote.
+ *
+ *
  *
  * ASCII codes using in STC-110 remote control protocol.
  * 0x02: STX - Start of Tx
