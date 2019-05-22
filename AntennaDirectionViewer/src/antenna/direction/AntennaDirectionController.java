@@ -93,7 +93,6 @@ public class AntennaDirectionController implements Initializable {
         floatingStage = new Stage();
         floatingStage.initOwner(stage);
         Parent root = FXMLLoader.load(getClass().getResource("AntennaDirectionFloatingView.fxml"));
-        root.setStyle("-fx-background-color: transparent");
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         floatingStage.setScene(scene);

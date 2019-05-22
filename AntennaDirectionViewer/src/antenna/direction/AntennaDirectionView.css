@@ -33,9 +33,16 @@
 -fx-base: #404040;
 }
 
+/* Flowpane of floating window */
+#floating {
+-fx-background-radius: 8;
+-fx-background-color: rgba(64, 64, 96, 0.5);
+}
+
+/* Label on Flowpane of floating window */
 #floating .label {
 -fx-font-family: monospaced;
--fx-font-size: 16;
+-fx-font-size: 32;
 -fx-font-weight: bold;
 -fx-text-fill: #40c0a0;
 }

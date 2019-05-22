@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 
-<FlowPane id="floating" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="417.0" stylesheets="@AntennaDirectionView.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionFloatingController">
+
+<HBox id="floating" spacing="12.0" stylesheets="@AntennaDirectionView.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionFloatingController">
    <children>
+      <Label text="ANT#1" />
       <Label text="Az:" />
       <Label fx:id="azimuthLabel" text="+180.0" />
       <Label text="El:" />
       <Label fx:id="elevationLabel" text="+45.0" />
       <Label text="Pol:" />
       <Label fx:id="polarizationLabel" text="+0.0" />
+      <Label text="R" />
    </children>
-</FlowPane>
+   <padding>
+      <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+   </padding>
+</HBox>
