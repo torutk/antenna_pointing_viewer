@@ -1,5 +1,6 @@
 package antenna.direction;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ public class AntennaDirectionFloatingController implements Initializable {
     Label elevationLabel;
     @FXML
     Label polarizationLabel;
+    @FXML
+    Label antennaTargetLabel;
 
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     private double dragStartX;
@@ -47,6 +50,7 @@ public class AntennaDirectionFloatingController implements Initializable {
                 });
             }
         });
+        antennaTargetLabel.textProperty().bind(Bindings.concat("ANT#", model.targetAntennaProperty()));
     }
 
     Stage getStage() {

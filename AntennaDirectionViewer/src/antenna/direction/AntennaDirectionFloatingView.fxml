@@ -4,10 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 
-
-<HBox id="floating" spacing="12.0" stylesheets="@AntennaDirectionView.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionFloatingController">
+<HBox id="floating" spacing="12.0" stylesheets="@AntennaDirectionView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="antenna.direction.AntennaDirectionFloatingController">
    <children>
-      <Label text="ANT#1" />
+      <Label fx:id="antennaTargetLabel" text="ANT#1" />
       <Label text="Az:" />
       <Label fx:id="azimuthLabel" text="+180.0" />
       <Label text="El:" />

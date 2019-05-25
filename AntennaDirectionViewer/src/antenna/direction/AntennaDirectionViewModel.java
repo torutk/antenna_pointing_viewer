@@ -8,6 +8,7 @@ import javafx.beans.property.*;
 import java.time.LocalTime;
 
 /**
+ * View Model for Antenna Direction.
  *
  * @author TAKAHASHI,Toru
  */
@@ -25,6 +26,7 @@ public enum AntennaDirectionViewModel {
     private ObjectProperty<LocalTime> updateTimeProperty = new SimpleObjectProperty<>();
     private IntegerProperty periodicProperty = new SimpleIntegerProperty(0);
     private BooleanProperty floatingProperty = new SimpleBooleanProperty(false);
+    private IntegerProperty targetAntennaProperty = new SimpleIntegerProperty(1);
 
     public DoubleProperty elevationProperty() {
         return elevationProperty;
@@ -54,6 +56,10 @@ public enum AntennaDirectionViewModel {
         return floatingProperty;
     }
 
+    public IntegerProperty targetAntennaProperty() {
+        return targetAntennaProperty;
+    }
+
     public void setElevation(double angle) {
         elevationProperty.set(angle);
     }
@@ -76,5 +82,12 @@ public enum AntennaDirectionViewModel {
 
     public void setFloating(boolean isFloating) {
         floatingProperty.setValue(isFloating);
+    }
+
+    public void setTargetAntenna(int id) {
+        if (id != 1 && id !=2) {
+            throw new IllegalArgumentException("id should be 1 or 2, but " + id);
+        }
+        targetAntennaProperty.set(id);
     }
 }

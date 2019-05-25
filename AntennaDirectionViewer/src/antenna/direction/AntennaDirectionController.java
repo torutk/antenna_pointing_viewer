@@ -13,7 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -42,6 +44,7 @@ public class AntennaDirectionController implements Initializable {
 
     @FXML CheckBox periodicUpdateCheckbox;
     @FXML TextField periodicTextField;
+    @FXML ToggleGroup antennaSelectionGroup;
 
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     private AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
@@ -68,6 +71,7 @@ public class AntennaDirectionController implements Initializable {
     }
 
     void update() {
+        logger.finer("Update antenna direction values.");
         boundary.getAzimuth();
         boundary.getElevation();
         boundary.getPolarization();
@@ -102,6 +106,12 @@ public class AntennaDirectionController implements Initializable {
         model.setFloating(true);
     }
 
+    void targetAntenna(int id) {
+        logger.info("Antenna target is changed to " + id);
+        model.setTargetAntenna(id);
+        boundary.connectTo(id);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         elevationText.textProperty().bind(model.elevationProperty().asString());
@@ -120,6 +130,17 @@ public class AntennaDirectionController implements Initializable {
                 stage.show();
             }
         });
+        antennaSelectionGroup.selectedToggleProperty().addListener((obs, ov, nv) -> {
+            RadioButton selected = (RadioButton) nv;
+            if (selected.getText().equals("ANT#1")) {
+                targetAntenna(1);
+            } else if (selected.getText().equals("ANT#2")) {
+                targetAntenna(2);
+            } else {
+                throw new IllegalArgumentException("RadioButton should be 'ANT#1' or 'ANT#2', but " + selected.getText());
+            }
+        });
+
     }
     
     

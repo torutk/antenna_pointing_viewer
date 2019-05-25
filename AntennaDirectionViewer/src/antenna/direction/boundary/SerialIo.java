@@ -6,7 +6,8 @@ import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 
-public class SerialIo {
+class SerialIo {
+
     private static final Logger logger = Logger.getLogger(SerialIo.class.getName());
     private SerialPort port;
 

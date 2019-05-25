@@ -9,6 +9,7 @@ import javafx.application.Platform;
 
 import java.nio.ByteBuffer;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
 
@@ -25,8 +26,8 @@ public enum AntennaDirectionBoundary {
         t.setDaemon(true);
         return t;
     };
-
-    private SerialIo serial = new SerialIo("COM3");
+    private Map<Integer, SerialIo> serialIoMap;
+    private SerialIo serial;
     private Executor requestExecutor = Executors.newSingleThreadExecutor(daemonThreadFactory);
 
     private ScheduledExecutorService periodicExecutor = Executors.newSingleThreadScheduledExecutor(daemonThreadFactory);
@@ -35,6 +36,8 @@ public enum AntennaDirectionBoundary {
     private Runnable task;
 
     AntennaDirectionBoundary() {
+        serialIoMap = Map.of(1, new SerialIo("COM3"), 2, new SerialIo("COM4"));
+        serial = serialIoMap.get(1); // default
         task = () -> {
             getAzimuth();
             getElevation();
@@ -132,6 +135,13 @@ public enum AntennaDirectionBoundary {
         if (future != null) {
             future.cancel(true);
         }
+    }
+
+    public void connectTo(int id) {
+        if (id != 1 && id != 2) {
+            throw new IllegalArgumentException("id should be 1 or 2, but " + id);
+        }
+        serial = serialIoMap.get(id);
     }
 
     public void shutdown() {
