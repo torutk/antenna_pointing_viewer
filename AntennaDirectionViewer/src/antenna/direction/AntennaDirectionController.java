@@ -13,7 +13,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
@@ -45,6 +48,8 @@ public class AntennaDirectionController implements Initializable {
     @FXML CheckBox periodicUpdateCheckbox;
     @FXML TextField periodicTextField;
     @FXML ToggleGroup antennaSelectionGroup;
+    @FXML Spinner<Integer> floatingFontSizeSpinner;
+    @FXML ColorPicker floatingFontColorPicker;
 
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     private AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
@@ -140,6 +145,7 @@ public class AntennaDirectionController implements Initializable {
                 throw new IllegalArgumentException("RadioButton should be 'ANT#1' or 'ANT#2', but " + selected.getText());
             }
         });
+        floatingFontSizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(5, 72));
 
     }
     
