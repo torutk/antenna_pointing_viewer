@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="jdk" jdkName="Zulu FX 11" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="ZuluFX 11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jserialcomm" level="application" />
     <orderEntry type="library" scope="TEST" name="junit5" level="application" />

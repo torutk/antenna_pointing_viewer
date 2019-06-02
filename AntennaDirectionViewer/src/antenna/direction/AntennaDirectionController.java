@@ -5,6 +5,7 @@ package antenna.direction;
 
 import antenna.direction.boundary.AntennaDirectionBoundary;
 import javafx.beans.binding.Bindings;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +47,7 @@ public class AntennaDirectionController implements Initializable {
     @FXML TextField periodicTextField;
     @FXML ToggleGroup antennaSelectionGroup;
 
+    private PseudoClass errorClass = PseudoClass.getPseudoClass("error");
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     private AntennaDirectionBoundary boundary = AntennaDirectionBoundary.INSTANCE;
     private Stage stage;
@@ -79,12 +81,19 @@ public class AntennaDirectionController implements Initializable {
     }
 
     void config() {
-        logger.info("model#periodicProperty is " + model.periodicProperty().get());
-        if (periodicUpdateCheckbox.isSelected()) {
-            boundary.startPeriodic(model.periodicProperty().get());
-        } else {
+        int period = model.periodicProperty().get();
+        logger.info("model#periodicProperty is " + period);
+        if (! periodicUpdateCheckbox.isSelected()) {
             boundary.stopPeriodic();
+            return;
         }
+        if (period < 1) {
+            periodicTextField.pseudoClassStateChanged(errorClass, true);
+            periodicUpdateCheckbox.setSelected(false);
+            return;
+        }
+        boundary.startPeriodic(period);
+        periodicTextField.pseudoClassStateChanged(errorClass, false);
     }
 
     /**

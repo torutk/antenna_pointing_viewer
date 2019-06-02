@@ -33,6 +33,11 @@
 -fx-base: #404040;
 }
 
+.text-field:error {
+-fx-text-box-border: red;
+-fx-focus-color: red;
+}
+
 /* Flowpane of floating window */
 #floating {
 -fx-background-radius: 8;
