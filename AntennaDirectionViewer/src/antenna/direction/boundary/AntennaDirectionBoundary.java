@@ -19,6 +19,8 @@ import java.util.logging.Logger;
  */
 public enum AntennaDirectionBoundary {
     INSTANCE;
+    public final static String KEY_SERIAL_PORT1_IDENTIFIER = "antenna.direction.boundary.serialport1";
+    public final static String KEY_SERIAL_PORT2_IDENTIFIER = "antenna.direction.boundary.serialport2";
 
     public static final Logger log = Logger.getLogger(AntennaDirectionBoundary.class.getName());
     private ThreadFactory daemonThreadFactory = r -> {
@@ -36,7 +38,9 @@ public enum AntennaDirectionBoundary {
     private Runnable task;
 
     AntennaDirectionBoundary() {
-        serialIoMap = Map.of(1, new SerialIo("COM3"), 2, new SerialIo("COM4"));
+        String id1 = System.getProperty(KEY_SERIAL_PORT1_IDENTIFIER, "COM1");
+        String id2 = System.getProperty(KEY_SERIAL_PORT2_IDENTIFIER, "COM2");
+        serialIoMap = Map.of(1, new SerialIo(id1), 2, new SerialIo(id2));
         serial = serialIoMap.get(1); // default
         task = () -> {
             getAzimuth();

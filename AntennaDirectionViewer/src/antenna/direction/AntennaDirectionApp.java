@@ -3,16 +3,15 @@
  */
 package antenna.direction;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.LogManager;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.LogManager;
 
 /**
  * JavaFX Application entry point.
@@ -36,11 +35,11 @@ public class AntennaDirectionApp extends Application {
     /**
      * Initialize log configuration.
      *
-     * Configuration can be applied from file or class specified by system property.
+     * Logging configuration can be applied from file or class specified by system property.
      * If system property is not specified, then read file named 'logging.properties'
      * from the directory of this application class.
      */
-    static void setupLogging() {
+    private static void setupLogging() {
         if (System.getProperty("java.util.logging.config.file") == null
                 && System.getProperty("java.util.logging.config.class") == null) {
             try (InputStream resource = AntennaDirectionApp.class.getResourceAsStream("logging.properties")) {
@@ -56,10 +55,18 @@ public class AntennaDirectionApp extends Application {
     /**
      * Entry point of this application program.
      *
+     * Some system properties are used for this application.
+     * <pre>{@code
+     *     antenna.direction.boundary.serialport1 - specify serial port identifier for antenna #1
+     *     antenna.direction.boundary.serialport2 - specify serial port identifier for antenna #2
+     * }</pre>
+     *
      * @param args command-line arguments
+     *
      */
     public static void main(String[] args) {
         setupLogging();
         launch(args);
     }
+
 }
