@@ -5,5 +5,7 @@ jlink --no-header-files --no-man-pages --compress=2 --strip-debug ^
  --add-modules AntennaDirectionViewer ^
  --output out\runtime ^
  --launcher antennadirectionviewer=AntennaDirectionViewer/antenna.direction.AntennaDirectionApp
- 
+
+copy antennadirectionviewer.bat out\runtime\bin\
+
 pause
