@@ -21,6 +21,8 @@ public class AntennaDirectionFloatingController implements Initializable {
     Label polarizationLabel;
     @FXML
     Label antennaTargetLabel;
+    @FXML
+    Label angleModeLabel;
 
     private AntennaDirectionViewModel model = AntennaDirectionViewModel.INSTANCE;
     private double dragStartX;
@@ -51,6 +53,9 @@ public class AntennaDirectionFloatingController implements Initializable {
             }
         });
         antennaTargetLabel.textProperty().bind(Bindings.concat("ANT#", model.targetAntennaProperty()));
+        angleModeLabel.textProperty().bind(Bindings.createStringBinding(() ->
+                model.angleModeProperty().isNull().get() ? "-" : model.angleModeProperty().get().name().substring(0, 1))
+        );
     }
 
     Stage getStage() {
