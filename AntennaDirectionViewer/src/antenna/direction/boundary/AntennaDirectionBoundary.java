@@ -132,7 +132,7 @@ public enum AntennaDirectionBoundary {
     }
 
     public void startPeriodic(int interval) {
-        future = periodicExecutor.scheduleWithFixedDelay(task, 0, interval, TimeUnit.SECONDS);
+        future = periodicExecutor.scheduleWithFixedDelay(task, interval, interval, TimeUnit.SECONDS);
     }
 
     public void stopPeriodic() {
