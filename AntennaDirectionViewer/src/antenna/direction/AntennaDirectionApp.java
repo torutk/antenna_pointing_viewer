@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ResourceBundle;
 import java.util.logging.LogManager;
 
 /**
@@ -24,10 +25,11 @@ public class AntennaDirectionApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AntennaDirectionView.fxml"));
+        var bundle = ResourceBundle.getBundle("antenna.direction.AntennaDirectionView");
+        Parent root = FXMLLoader.load(getClass().getResource("AntennaDirectionView.fxml"), bundle);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("STC-110 Remote Viewer");
+        primaryStage.setTitle("STC-110 Remote Viewer " + bundle.getString("antenna.direction.version"));
         primaryStage.setOnCloseRequest(event -> Platform.exit());
         primaryStage.show();
     }

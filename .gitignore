@@ -5,3 +5,4 @@ out/
 .idea/uiDesigner.xml
 *.log
 *.log.lck
+*.zip
