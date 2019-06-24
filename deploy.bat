@@ -12,12 +12,10 @@ if exist %RUNTIME_PATH% (
    rmdir /S /Q %RUNTIME_PATH%
 )
 
-echo #INFO replace version name in properties file.
-SET /P VERSION= < version.txt
-if %VERSION%=="" (
-    echo #ERROR failed to read version from version file.
-    goto :error_exit
-)
+echo #INFO set release version from git recent tag.
+for /f %%i in ('git describe --tag --abbrev^=0') do set VERSION=%%i
+echo #INFO VERSION=%VERSION%
+
 ren %PROPERTY_DIR%\%PROPERTY_FILE% %PROPERTY_FILE%_
 setlocal enabledelayedexpansion
 for /f "delims=" %%I in (%PROPERTY_DIR%\%PROPERTY_FILE%_) do (
@@ -44,12 +42,8 @@ if errorlevel 1 (
     goto :error_exit
 )
 
-echo #INFO copy version file in runtime
-copy version.txt %RUNTIME_PATH%
-if errorlevel 1 (
-    echo #ERROR failed to copy version file in runtime
-    goto :error_exit
-)
+echo #INFO generate version file in runtime
+echo %VERSION% > %RUNTIME_PATH%\version.txt
 
 echo #INFO archive runtime image
 powershell compress-archive -force out/runtime antenna_pointing_viewer-%VERSION%.zip
