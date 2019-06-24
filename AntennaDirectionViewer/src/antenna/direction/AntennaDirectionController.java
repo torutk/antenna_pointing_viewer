@@ -19,11 +19,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
@@ -70,6 +72,12 @@ public class AntennaDirectionController implements Initializable {
         logger.info("Floating view Triggered.");
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         floating();
+    }
+
+    @FXML
+    void handleSaveRecord(ActionEvent event) {
+        logger.info("Save Record Triggered.");
+        saveRecord();
     }
 
     void update() {
@@ -119,6 +127,16 @@ public class AntennaDirectionController implements Initializable {
         logger.info("Antenna target is changed to " + id);
         model.setTargetAntenna(id);
         boundary.connectTo(id);
+    }
+
+    void saveRecord() {
+        var chooser = new FileChooser();
+        var file = chooser.showSaveDialog(null);
+        if (file == null) {
+            return;
+        }
+        logger.info("Selected file to save directions - " + file);
+        model.saveDirectionLog(file.toPath());
     }
 
     @Override

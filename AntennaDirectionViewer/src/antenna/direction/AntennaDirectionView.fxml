@@ -87,6 +87,7 @@
                            <children>
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleFloatingView" text="Floating View" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleApply" text="Apply" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSaveRecord" text="Save Record" />
                            </children>
                            <opaqueInsets>
                               <Insets />

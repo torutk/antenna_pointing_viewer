@@ -5,6 +5,9 @@ package antenna.direction;
 
 import javafx.beans.property.*;
 
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -27,6 +30,8 @@ public enum AntennaDirectionViewModel {
     private IntegerProperty periodicProperty = new SimpleIntegerProperty(0);
     private BooleanProperty floatingProperty = new SimpleBooleanProperty(false);
     private IntegerProperty targetAntennaProperty = new SimpleIntegerProperty(1);
+
+    private AntennaDirectionLogger directionLogger = new AntennaDirectionLogger();
 
     public DoubleProperty elevationProperty() {
         return elevationProperty;
@@ -78,6 +83,14 @@ public enum AntennaDirectionViewModel {
 
     public void setUpdateTime(LocalTime time) {
         updateTimeProperty.set(time);
+        directionLogger.add(
+                LocalDateTime.of(LocalDate.now(), time),
+                targetAntennaProperty.intValue(),
+                azimuthProperty.doubleValue(),
+                elevationProperty.doubleValue(),
+                polarizationProperty.doubleValue(),
+                angleModeProperty.getValue()
+        );
     }
 
     public void setFloating(boolean isFloating) {
@@ -89,5 +102,9 @@ public enum AntennaDirectionViewModel {
             throw new IllegalArgumentException("id should be 1 or 2, but " + id);
         }
         targetAntennaProperty.set(id);
+    }
+
+    public void saveDirectionLog(Path path) {
+        directionLogger.save(path);
     }
 }
