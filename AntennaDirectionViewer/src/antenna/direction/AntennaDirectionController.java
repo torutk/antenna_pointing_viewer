@@ -25,7 +25,6 @@ import javafx.stage.StageStyle;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
@@ -80,7 +79,7 @@ public class AntennaDirectionController implements Initializable {
         saveRecord();
     }
 
-    void update() {
+    private void update() {
         logger.finer("Update antenna direction values.");
         boundary.getAzimuth();
         boundary.getElevation();
@@ -88,7 +87,7 @@ public class AntennaDirectionController implements Initializable {
         model.setUpdateTime(LocalTime.now());
     }
 
-    void config() {
+    private void config() {
         int period = model.periodicProperty().get();
         logger.info("model#periodicProperty is " + period);
         if (! periodicUpdateCheckbox.isSelected()) {
@@ -107,9 +106,9 @@ public class AntennaDirectionController implements Initializable {
     /**
      * change the view as transparent floating(always top) window.
      *
-     * @throws IOException
+     * @throws IOException FXML file cannot be loaded
      */
-    void floating() throws IOException {
+    private void floating() throws IOException {
         stage.hide();
         floatingStage = new Stage();
         floatingStage.initOwner(stage);
@@ -123,13 +122,13 @@ public class AntennaDirectionController implements Initializable {
         model.setFloating(true);
     }
 
-    void targetAntenna(int id) {
+    private void targetAntenna(int id) {
         logger.info("Antenna target is changed to " + id);
         model.setTargetAntenna(id);
         boundary.connectTo(id);
     }
 
-    void saveRecord() {
+    private void saveRecord() {
         var chooser = new FileChooser();
         var file = chooser.showSaveDialog(null);
         if (file == null) {

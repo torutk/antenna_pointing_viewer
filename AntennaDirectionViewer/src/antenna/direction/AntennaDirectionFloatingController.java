@@ -34,7 +34,6 @@ public class AntennaDirectionFloatingController implements Initializable {
     private double dragStartX;
     private double dragStartY;
     private Scene scene;
-    private Clipboard clipboard;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,7 +77,7 @@ public class AntennaDirectionFloatingController implements Initializable {
 
     // copy data to system clipboard as text.
     private void copyClipboard() {
-        clipboard = Clipboard.getSystemClipboard();
+        Clipboard clipboard = Clipboard.getSystemClipboard();
         var content = new ClipboardContent();
         content.putString(toText());
         clipboard.setContent(content);

@@ -43,7 +43,7 @@ public class Message {
     /**
      * Create Message with specified byte array.
      *
-     * @param data
+     * @param data byte array of message
      * @return message
      */
     static Message of(byte[] data) {
@@ -53,7 +53,7 @@ public class Message {
     /**
      * Calculate checksum between index 0 and length -2, then write the sum at length -1.
      *
-     * @param data
+     * @param data byte array of message
      */
     static void writeChecksum(byte[] data) {
         byte sum = checksum(data, 0, data.length - 2);
