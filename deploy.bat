@@ -35,11 +35,16 @@ if errorlevel 1 (
     goto :error_exit
 )
 
-echo #INFO copy launcher batch file in runtime
+echo #INFO copy launcher batch file and icon file in runtime
 copy antennadirectionviewer.bat %RUNTIME_PATH%\bin\
 if errorlevel 1 (
     echo #ERROR failed to copy launcher batch file in runtime
     goto :error_exit
+)
+copy antenna.ico %RUNTIME_PATH%\bin\
+if errorlevel 1 (
+   echo #ERROR failed to copy icon file in runtime
+   goto :error_exit
 )
 
 echo #INFO generate version file in runtime
