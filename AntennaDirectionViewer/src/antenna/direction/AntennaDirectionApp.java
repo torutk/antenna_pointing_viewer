@@ -18,6 +18,7 @@ import java.util.logging.LogManager;
  * JavaFX Application entry point.
  *
  * This application uses FXML and CSS files for JavaFX GUI, and logging properties file.
+ * User can customize CSS for floating window with 'CustomFloatingView.css' in current directory.
  *
  * @author TAKAHASHI,Toru
  */

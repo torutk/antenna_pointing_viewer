@@ -45,8 +45,14 @@ if errorlevel 1 (
 echo #INFO generate version file in runtime
 echo %VERSION% > %RUNTIME_PATH%\version.txt
 
+echo #INFO copy custom css file in runtime
+copy CustomFloatingView.css %RUNTIME_PATH%
+
 echo #INFO archive runtime image
-powershell compress-archive -force out/runtime antenna_pointing_viewer-%VERSION%.zip
+set DEPLOY_NAME=FA240_AntennaPointViewer-%VERSION%
+ren %RUNTIME_PATH% %DEPLOY_NAME%
+
+powershell compress-archive -force out\%DEPLOY_NAME% %DEPLOY_NAME%.zip
 if errorlevel 1 (
     echo #ERROR failed to archive runtime image
     goto :error_exit

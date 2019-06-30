@@ -11,6 +11,9 @@ import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -49,6 +52,7 @@ public class AntennaDirectionFloatingController implements Initializable {
             if (newScene != null) {
                 scene = newScene;
                 initializeSceneHandler();
+                initializeSceneStylesheet("CustomFloatingView.css");
             }
         });
     }
@@ -86,6 +90,14 @@ public class AntennaDirectionFloatingController implements Initializable {
                 antennaTargetLabel.getText(), azimuthLabel.getText(), elevationLabel.getText(),
                 polarizationLabel.getText(), angleModeLabel.getText()
         );
+    }
+
+    // user additional stylesheet to the floating scene
+    private void initializeSceneStylesheet(String cssFileName) {
+        Path path = Paths.get(cssFileName);
+        if (Files.exists(path)) {
+            scene.getRoot().getStylesheets().add(path.toUri().toString());
+        }
     }
 
     private Stage getStage() {
